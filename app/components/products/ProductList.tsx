@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryFilter from "./CategoryFilter";
 import ProductCard from "./ProductCard";
+import FloatingCart from "./FloatingCart";
 
 const products = [
     {
@@ -116,9 +117,19 @@ const products = [
 ];
 
 export default function ProductList() {
-    const [selectedCategory, setSelectedCategory] = useState("Combos");
+    const [selectedCategory, setSelectedCategory] = useState("Todos os produtos");
+    const [cart, setCart] = useState<any[]>([]);
+
+    useEffect(() => {
+        const savedCart = localStorage.getItem("cart");
+
+        if (savedCart) {
+            setCart(JSON.parse(savedCart));
+        }
+    }, []);
 
     const categories = [
+        "Todos os produtos",
         "Combos",
         "Pizzas",
         "Bebidas",
@@ -127,8 +138,54 @@ export default function ProductList() {
         "Bebidas Alcoólicas",
     ];
 
-    const filteredProducts = products.filter(
-        (product) => product.category === selectedCategory
+    const filteredProducts =
+        selectedCategory === "Todos os produtos"
+            ? [...products].sort((a, b) => {
+                if (a.category === "Combos" && b.category !== "Combos") return -1;
+                if (a.category !== "Combos" && b.category === "Combos") return 1;
+                return 0;
+            })
+            : products.filter(
+                (product) => product.category === selectedCategory
+            );
+
+    function addToCart(product: any) {
+        const existing = cart.find((item) => item.id === product.id);
+
+        let updatedCart;
+
+        if (existing) {
+            updatedCart = cart.map((item) =>
+                item.id === product.id
+                    ? {
+                        ...item,
+                        quantity: item.quantity + 1,
+                    }
+                    : item
+            );
+        } else {
+            updatedCart = [
+                ...cart,
+                {
+                    id: product.id,
+                    title: product.title,
+                    subtitle: product.subtitle,
+                    description: product.description,
+                    details: product.details ?? [],
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1,
+                },
+            ];
+        }
+
+        setCart(updatedCart);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
+
+    const totalItems = cart.reduce(
+        (acc, item) => acc + item.quantity,
+        0
     );
 
     return (
@@ -140,6 +197,7 @@ export default function ProductList() {
             />
 
             <div className="mx-auto max-w-7xl p-6">
+
                 <input
                     type="text"
                     placeholder="Pesquisar"
@@ -151,7 +209,9 @@ export default function ProductList() {
                 </h2>
 
                 <div className="space-y-6">
+
                     {filteredProducts.map((product) => (
+
                         <ProductCard
                             key={product.id}
                             image={product.image}
@@ -159,10 +219,17 @@ export default function ProductList() {
                             subtitle={product.subtitle}
                             description={product.description}
                             price={product.price}
+                            onAddToCart={() => addToCart(product)}
                         />
+
                     ))}
+
                 </div>
+
             </div>
+
+            <FloatingCart totalItems={totalItems} />
+
         </div>
     );
 }

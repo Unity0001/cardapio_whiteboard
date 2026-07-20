@@ -1,9 +1,8 @@
-import ProductList from "./products/ProductList";
+import ProductList from "../products/ProductList";
 
 export default function HeaderComp() {
     return (
         <div className="w-full">
-            {/* Cabeçalho da loja */}
             <div className="relative h-48 bg-gray-300">
                 <div className="absolute top-4 right-4">
                     Entrar
@@ -17,7 +16,7 @@ export default function HeaderComp() {
                     </div>
 
                     <div className="pt-8 text-center">
-                        <h1 className="text-4xl">NOME DA PIZZARIA</h1>
+                        <h1 className="text-4xl">Nome  do Restaurante</h1>
 
                         <p className="text-blue-500">
                             Rua Exemplo, 123 - Cidade/UF
