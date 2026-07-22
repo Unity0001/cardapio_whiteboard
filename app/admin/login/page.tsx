@@ -13,17 +13,24 @@ export default function LoginAdmin() {
     const [erro, setErro] = useState("");
 
     async function entrar() {
+        alert("clicou");
+
         try {
             setErro("");
 
-            await signInWithEmailAndPassword(
+            const resultado = await signInWithEmailAndPassword(
                 auth,
                 email,
                 senha
             );
 
+            alert("Login OK");
+
             router.push("/admin/dashboard");
-        } catch {
+
+        } catch (error) {
+            alert("Erro no login");
+            console.log(error);
             setErro("Email ou senha inválidos.");
         }
     }
@@ -62,7 +69,10 @@ export default function LoginAdmin() {
                     )}
 
                     <button
-                        onClick={entrar}
+                        onClick={() => {
+                            console.log("BOTÃO CLICADO");
+                            entrar();
+                        }}
                         className="w-full rounded-lg bg-green-600 py-3 text-lg font-semibold text-white hover:bg-green-700"
                     >
                         Entrar
