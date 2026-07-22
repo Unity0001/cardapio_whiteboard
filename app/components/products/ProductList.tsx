@@ -107,28 +107,29 @@ export default function ProductList() {
     );
 
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
+
             <CategoryFilter
                 categories={categories}
                 selected={selectedCategory}
                 onSelect={setSelectedCategory}
             />
 
-            <div className="mx-auto max-w-7xl p-6">
+            <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6">
 
                 <input
                     type="text"
                     placeholder="Pesquisar..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="mb-10 w-full rounded-lg border p-3 outline-none"
+                    className="mb-6 w-full rounded-lg border p-3 outline-none"
                 />
 
-                <h2 className="mb-8 border-b-2 border-black text-center text-5xl font-bold">
+                <h2 className="mb-6 border-b-2 border-black pb-2 text-center text-3xl font-bold sm:text-4xl md:text-5xl">
                     {selectedCategory}
                 </h2>
 
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
 
                     {filteredProducts.map((product) => (
                         <ProductCard
@@ -143,8 +144,8 @@ export default function ProductList() {
                     ))}
 
                     {filteredProducts.length === 0 && (
-                        <div className="rounded-xl bg-white p-10 text-center shadow">
-                            <h2 className="text-2xl font-bold">
+                        <div className="rounded-xl bg-white p-8 text-center shadow">
+                            <h2 className="text-xl font-bold sm:text-2xl">
                                 Nenhum produto encontrado.
                             </h2>
                         </div>

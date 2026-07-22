@@ -5,23 +5,21 @@ export default function HeaderComp() {
         <div className="w-full">
 
             {/* Banner */}
-            <div className="relative h-40 sm:h-56 md:h-64 bg-gray-300">
-                <img
-                    src="/background_logo.jpeg"
-                    alt="Header"
-                    className="h-full w-full object-cover"
-                />
+            <div className="relative">
 
-                <a
-                    href="/admin"
-                    className="absolute right-3 top-3 sm:right-5 sm:top-5"
-                >
+                <div className="absolute left-1/2 -translate-x-1/2 -top-12 sm:-top-16 h-24 w-24 sm:h-32 sm:w-32 overflow-hidden rounded-xl border-4 border-white bg-white shadow-lg">
+
                     <img
-                        src="/user_logo.png"
-                        alt="Administrador"
-                        className="h-10 w-10 rounded-lg bg-white object-cover shadow sm:h-12 sm:w-12"
+                        src="/logo.jpeg"
+                        alt="Logo"
+                        className="h-full w-full object-cover"
                     />
-                </a>
+
+                </div>
+
+            </div>
+
+            <div className="pt-16 sm:pt-20 text-center">
             </div>
 
             {/* Informações */}

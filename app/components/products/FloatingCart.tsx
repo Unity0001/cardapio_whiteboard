@@ -12,7 +12,7 @@ export default function FloatingCart({
     return (
         <Link
             href="/carrinho"
-            className="fixed right-8 bottom-8 z-50"
+            className="fixed bottom-6 right-6 z-[9999]"
         >
             <button className="flex items-center gap-3 rounded-full bg-green-600 px-6 py-4 text-white shadow-2xl transition hover:scale-105 hover:bg-green-700">
                 🛒
