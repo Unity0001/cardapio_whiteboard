@@ -5,21 +5,23 @@ export default function HeaderComp() {
         <div className="w-full">
 
             {/* Banner */}
-            <div className="relative">
+            <div className="relative h-40 sm:h-56 md:h-64 bg-gray-300">
+                <img
+                    src="/background_logo.jpeg"
+                    alt="Header"
+                    className="h-full w-full object-cover"
+                />
 
-                <div className="absolute left-1/2 -translate-x-1/2 -top-12 sm:-top-16 h-24 w-24 sm:h-32 sm:w-32 overflow-hidden rounded-xl border-4 border-white bg-white shadow-lg">
-
+                <a
+                    href="/admin"
+                    className="absolute right-3 top-3 sm:right-5 sm:top-5"
+                >
                     <img
-                        src="/logo.jpeg"
-                        alt="Logo"
-                        className="h-full w-full object-cover"
+                        src="/user_logo.png"
+                        alt="Administrador"
+                        className="h-10 w-10 rounded-lg object-cover shadow sm:h-12 sm:w-12"
                     />
-
-                </div>
-
-            </div>
-
-            <div className="pt-16 sm:pt-20 text-center">
+                </a>
             </div>
 
             {/* Informações */}
@@ -28,9 +30,9 @@ export default function HeaderComp() {
                 <div className="mx-auto max-w-6xl px-4">
 
                     {/* Logo */}
-                    <div className="relative flex justify-center">
+                    <div className="relative">
 
-                        <div className="-mt-14 h-24 w-24 overflow-hidden rounded-xl border-4 border-white bg-white shadow-lg sm:-mt-16 sm:h-32 sm:w-32">
+                        <div className="absolute left-1/2 -translate-x-1/2 -top-12 sm:-top-16 h-24 w-24 sm:h-32 sm:w-32 overflow-hidden rounded-xl border-4 border-white bg-white shadow-lg">
 
                             <img
                                 src="/logo.jpeg"
@@ -40,6 +42,10 @@ export default function HeaderComp() {
 
                         </div>
 
+                    </div>
+
+                    <div className="pt-16 sm:pt-20 text-center">
+                        
                     </div>
 
                     {/* Dados */}
