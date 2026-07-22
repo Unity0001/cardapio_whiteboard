@@ -32,7 +32,7 @@ export default function PagamentoPage() {
     const total = subtotal + taxaEntrega;
 
     function enviarWhatsapp(tipoPagamento: string) {
-        const numero = "5519993188383";
+        const numero = "5519994483147";
 
         const listaProdutos = cart
             .map(

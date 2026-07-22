@@ -4,15 +4,20 @@ export default function HeaderComp() {
     return (
         <div className="w-full">
             <div className="relative h-48 bg-gray-300">
+                <img src="/background_logo.jpeg" alt="Header" className="h-full w-full object-cover" />
                 <div className="absolute top-4 right-4">
-                    Entrar
+                    <a href="/admin">
+                        <img src="/user_logo.png" alt="Logo" className="h-12 w-12 rounded-lg color-white object-cover" />
+                    </a>
                 </div>
             </div>
 
             <div className="bg-gray-100 pb-8">
                 <div className="mx-auto max-w-6xl">
                     <div className="relative">
-                        <div className="absolute -top-12 left-8 h-24 w-24 rounded-lg bg-gray-500" />
+                        <div className="absolute -top-18 left-132 h-24 w-24 rounded-lg">
+                            <img src="/logo.jpeg" alt="Logo" className="h-full w-full rounded-lg object-cover" />
+                        </div>
                     </div>
 
                     <div className="pt-8 text-center">
