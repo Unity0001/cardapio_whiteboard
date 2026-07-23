@@ -17,6 +17,15 @@ export default function Dashboard() {
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
 
+  const [editandoId, setEditandoId] = useState<string | null>(null);
+
+  const [editTitle, setEditTitle] = useState('');
+  const [editSubtitle, setEditSubtitle] = useState('');
+  const [editDescription, setEditDescription] = useState('');
+  const [editCategory, setEditCategory] = useState('');
+  const [editPrice, setEditPrice] = useState('');
+  const [editImage, setEditImage] = useState('');
+
   const [mensagem, setMensagem] = useState('');
   const [tipoMensagem, setTipoMensagem] = useState<'sucesso' | 'erro' | ''>('');
 
@@ -92,18 +101,34 @@ export default function Dashboard() {
     mostrarMensagem('Produto excluído.', 'sucesso');
   }
 
-  async function alterarPreco(id: string, preco: number) {
-    const valor = prompt('Novo preço', preco.toString());
+  function editarProduto(product: any) {
+    setEditandoId(product.id);
 
-    if (!valor) return;
+    setEditTitle(product.title);
+    setEditSubtitle(product.subtitle);
+    setEditDescription(product.description);
+    setEditCategory(product.category);
+    setEditPrice(product.price.toString());
+    setEditImage(product.image);
+  }
 
-    await updateDoc(doc(db, 'products', id), {
-      price: Number(valor),
+  async function salvarEdicao() {
+    if (!editandoId) return;
+
+    await updateDoc(doc(db, 'products', editandoId), {
+      title: editTitle,
+      subtitle: editSubtitle,
+      description: editDescription,
+      category: editCategory,
+      price: Number(editPrice),
+      image: editImage,
     });
+
+    setEditandoId(null);
 
     await carregarProdutos();
 
-    mostrarMensagem('Preço atualizado.', 'sucesso');
+    mostrarMensagem('Produto atualizado com sucesso!', 'sucesso');
   }
 
   return (
@@ -195,21 +220,91 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Lista de Produtos */}
+        {editandoId && (
+          <div className="mb-8 rounded-xl bg-white p-6 shadow">
+            <h2 className="mb-5 text-2xl font-bold">Editar Produto</h2>
+
+            <div className="grid gap-4">
+              <input
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                className="rounded border p-3"
+                placeholder="Nome"
+              />
+
+              <input
+                value={editSubtitle}
+                onChange={(e) => setEditSubtitle(e.target.value)}
+                className="rounded border p-3"
+                placeholder="Subtítulo"
+              />
+
+              <textarea
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+                className="rounded border p-3"
+                placeholder="Descrição"
+              />
+
+              <select
+                value={editCategory}
+                onChange={(e) => setEditCategory(e.target.value)}
+                className="rounded border p-3"
+              >
+                <option>Combos</option>
+                <option>Pizzas</option>
+                <option>Bebidas</option>
+                <option>Sucos</option>
+                <option>Energéticos</option>
+                <option>Bebidas Alcoólicas</option>
+              </select>
+
+              <input
+                type="number"
+                value={editPrice}
+                onChange={(e) => setEditPrice(e.target.value)}
+                className="rounded border p-3"
+                placeholder="Preço"
+              />
+
+              <input
+                value={editImage}
+                onChange={(e) => setEditImage(e.target.value)}
+                className="rounded border p-3"
+                placeholder="URL da imagem"
+              />
+
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <button
+                  onClick={salvarEdicao}
+                  className="flex-1 rounded bg-green-600 p-3 font-semibold text-white hover:bg-green-700"
+                >
+                  Salvar Alterações
+                </button>
+
+                <button
+                  onClick={() => setEditandoId(null)}
+                  className="flex-1 rounded bg-gray-500 p-3 font-semibold text-white hover:bg-gray-600"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="space-y-5">
           {products.map((product) => (
             <div
               key={product.id}
               className="flex flex-col gap-5 rounded-xl bg-white p-5 shadow md:flex-row md:items-center"
             >
-              {/* Imagem */}
               <img
                 src={product.image}
                 alt={product.title}
                 className="h-52 w-full rounded-lg object-cover md:h-28 md:w-28 md:flex-shrink-0"
               />
 
-              {/* Informações */}
               <div className="flex-1 text-center md:text-left">
                 <h2 className="text-xl font-bold sm:text-2xl">{product.title}</h2>
 
@@ -224,13 +319,12 @@ export default function Dashboard() {
                 </p>
               </div>
 
-              {/* Botões */}
               <div className="flex w-full flex-col gap-3 md:w-auto">
                 <button
-                  onClick={() => alterarPreco(product.id, product.price)}
+                  onClick={() => editarProduto(product)}
                   className="w-full rounded bg-yellow-500 px-4 py-3 font-semibold text-white transition hover:bg-yellow-600 md:w-44"
                 >
-                  Alterar Preço
+                  Editar
                 </button>
 
                 <button
